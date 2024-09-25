@@ -23,43 +23,16 @@ def get_vscode_process():
         try:
             # VSCode process name is typically 'Code' or 'code'
             if 'code helper' == proc.info['name'].lower():
-                # Check the full executable path for additional accuracy
-                # exe_path = proc.info.get('exe', '')
-                # if exe_path and 'code' in os.path.basename(exe_path).lower():
                     return proc
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
     return None
 
-# Function to track when an application opens
-# def track_application_open():
-#     vscode_process = None
-#     # global open_time
- 
-    
-#     try:
-#         while True:
-#             current_vscode_process = get_vscode_process()
-#             # print(current_vscode_process)
-            
-#             if current_vscode_process:
-#                 if not vscode_process:
-#                     # VSCode just opened
-#                     open_time = datetime.now()
-#                     logger.info(f"VSCode opened at {open_time}")
-#                     vscode_process = current_vscode_process
-            
-#             time.sleep(1)  # Check every second for better responsiveness
-#     except KeyboardInterrupt:
-#         logger.info("Tracking open applications stopped.")
-
-# Function to track when an application closes
 def track_application_close():
     vscode_process = None
     current_vscode_process = None
     global open_time
-    
-    
+
     try:
         while True:
             current_vscode_process = get_vscode_process()
@@ -88,6 +61,4 @@ def track_application_close():
         logger.info("Tracking closed applications stopped.")
 
 if __name__ == "__main__":
-    # Uncomment the function you want to run
-    # track_application_open()
     track_application_close()
