@@ -21,7 +21,7 @@ current_user = getpass.getuser()
 def get_vscode_process():
     for proc in psutil.process_iter(['pid', 'name', 'exe']):
         try:
-            # VSCode process name is typically 'Code' or 'code'
+            # tracking the code helper process because tracking code didnt work 
             if 'code helper' == proc.info['name'].lower():
                     return proc
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
@@ -55,6 +55,7 @@ def track_application_close():
                 print(usage_time)
                 logger.info(f"VSCode closed at {close_time}, Total time open: {usage_time}")
                 vscode_process = None  # Reset the process tracker
+                break
         
             time.sleep(1)  # Check every second for better responsiveness
     except KeyboardInterrupt:
